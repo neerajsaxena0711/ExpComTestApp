@@ -1,17 +1,118 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+     Entry Form
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">Entry Form</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  
+
+  <form [formGroup]="entryForm" (ngSubmit)="submit()" style="padding:10px;">
+
+    <ion-list>
+
+      <!-- Name -->
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input formControlName="name" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.name">
+        <ng-container *ngIf="name.hasError(error.type) && (name.dirty || name.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <!-- Email -->
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email" autocapitalize inputmode="text" email></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.email">
+        <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+
+      <!-- Purpose -->
+      <ion-radio-group value="purpose" [(ngModel)]="purposeOfMeet" formControlName="purpose">
+
+        <ion-list-header>
+          <ion-label>Purpose of visit</ion-label>
+      </ion-list-header>
+
+        <ion-item>
+          <ion-label>Meeting</ion-label>
+          <ion-radio  slot="start" value="meeting"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Delivery</ion-label>
+          <ion-radio slot="start" value="delivery"></ion-radio>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label>Personal</ion-label>
+          <ion-radio slot="start" value="personal"></ion-radio>
+        </ion-item>
+
+
+      </ion-radio-group>
+
+      <!-- Visitor's name -->
+
+      <ion-item>
+        <ion-label position="floating">Visitor's Name</ion-label>
+        <ion-input formControlName="visitorName" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.visitorName">
+        <ng-container *ngIf="visitorName.hasError(error.type) && (visitorName.dirty || visitorName.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+
+      <ion-item>
+        <ion-label>Today's date</ion-label>
+        <ion-datetime [disabled]=true displayFormat="MMM DD"  [(ngModel)]="todaysDate"
+          [ngModelOptions]="{standalone: true}"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+          <ion-label>Entry time</ion-label>
+          <ion-datetime displayFormat="h: mm a" formControlName="entryTime" ></ion-datetime>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.entryTime">
+          <ng-container *ngIf="entryTime.hasError(error.type) && (entryTime.dirty || entryTime.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+
+
+        <ion-item>
+          <ion-label>Exit time</ion-label>
+          <ion-datetime displayFormat="h: mm A" formControlName="exitTime"></ion-datetime>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.exitTime">
+          <ng-container *ngIf="exitTime.hasError(error.type) && (exitTime.dirty || exitTime.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+
+      <ion-button [disabled]="!entryForm.valid" type="submit" expand="full" color="primary">Enter</ion-button>
+
+    </ion-list>
+
+  </form>
+
 </ion-content>

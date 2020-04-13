@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StorageService, Entry } from '../services/storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +8,21 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  entryList: Entry[] = [];
+
+  constructor(private storage: StorageService) { }
+
+  ionViewWillEnter() {
+    this.loadEntries();
+  }
+
+  loadEntries() {
+    this.storage.loadEntries().then(entries => {
+      this.entryList = entries;
+      console.log(JSON.stringify(this.entryList));
+    }).catch(err => {
+      console.log('Something went wrong');
+    });
+  }
 
 }

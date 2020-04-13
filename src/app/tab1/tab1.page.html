@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Logs
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,26 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Logs</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div class = "empty-items">
+    <h1 *ngIf = "entryList.length == 0">No new logs</h1>
+  </div>
+
+  <ion-list *ngIf = "entryList && entryList.length > 0 ">
+    <ion-item *ngFor = "let entry of entryList">
+      <ion-chip slot = "end">{{entry.purpose}}</ion-chip>
+      <h2 slot = "end">{{entry.created | date: 'MMM dd'}}</h2>
+      <ion-label>
+        <h1>{{entry.name}}</h1>
+        <p>{{entry.email}}</p>
+        <h3>Visited: {{entry.visitorName}}</h3>
+        <p>IN: {{entry.entryTime | date: 'h: mm a'}}</p>
+        <p>OUT: {{entry.exitTime | date: 'h: mm a'}}</p>
+      </ion-label>
+    </ion-item>
+  
+  </ion-list>
 </ion-content>
